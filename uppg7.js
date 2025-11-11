@@ -1,37 +1,45 @@
-// Här har du fått all js kod från genomgången
-// Den har självklart andra variabelnamn och annan funktionalitet än vad du behöver
-// Använ ddenna fil som utgångspunkt för att lösa uppgiften eller skriv din egen kod
+// Get DOM elements
+const numberSlider = document.getElementById('numberSlider');
+const selectedNumber = document.getElementById('selectedNumber');
+const hint = document.getElementById('hint');
+const newGameBtn = document.getElementById('newGameBtn');
+const scoreElement = document.getElementById('score');
 
-let temperatureSlider = document.getElementById("temperatureSlider");
-let selectedTemperatureElement = document.getElementById("selectedTemperature");
-let weatherMessageElement = document.getElementById("weatherMessage");
+// Game state variables
+let targetNumber;
+let score = 0;
+let maxRange = 100;
 
-// Initial display of selected temperature
-selectedTemperatureElement.innerText = temperatureSlider.value + "°C";
+// Initialize the game
+function initializeGame() {
+    targetNumber = Math.floor(Math.random() * (maxRange + 1));
+    numberSlider.max = maxRange;
+    hint.textContent = 'Börja gissa ett nummer!';
+}
 
-// Initial update of weather message based on the default temperature
-updateWeatherMessage(temperatureSlider.value);
-
-// Event listener for slider change
-temperatureSlider.addEventListener("input", function() {
-    // Update the displayed temperature
-    selectedTemperatureElement.innerText = temperatureSlider.value + "°C";
-
-    // Update the weather message based on the selected temperature
-    updateWeatherMessage(temperatureSlider.value);
+// Update the display when slider moves
+numberSlider.addEventListener('input', function() {
+    const guess = parseInt(this.value);
+    selectedNumber.textContent = guess;
+    
+    // Check if the guess is correct
+    if (guess === targetNumber) {
+        hint.textContent = 'Rätt gissat! Grattis!';
+        score++;
+        scoreElement.textContent = score;
+        maxRange += 100; // Increase range for next round
+        setTimeout(initializeGame, 1500); // Start new game after 1.5 seconds
+    } else if (guess < targetNumber) {
+        hint.textContent = 'För lågt! Försök med ett högre nummer.';
+    } else {
+        hint.textContent = 'för högt! Försök med ett lägre nummer.';
+    }
 });
 
-// Function to update the weather message
-function updateWeatherMessage(temperature) {
-    if (temperature > 30) {
-        weatherMessageElement.innerText = "It's a hot day!";
-        weatherMessageElement.style.color = "red";
-    } else if (temperature <= 30 && temperature >= 20) {
-        weatherMessageElement.innerText = "The weather is pleasant.";
-        weatherMessageElement.style.color = "green";
-    } else {
-        weatherMessageElement.innerText = "It's a bit chilly.";
-        weatherMessageElement.style.color = "blue";
-    }
-}
+
+newGameBtn.addEventListener('click', function() {
+    initializeGame();
+});
+
+initializeGame();
 

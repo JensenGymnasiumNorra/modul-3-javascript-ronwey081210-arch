@@ -1,0 +1,67 @@
+<!--
+    Använd från genomgången (som ligger i filen nedan) för att skapa en miniräknare som fungerar för + - / *
+    Extrauppgift 1: Ändra inputfälten till sliders
+    Extrauppgift 2: Lägg till en dropdown för räknesätt och en knapp som utför beräkningen
+    Extrauppgift 3: Lägg till en knapp som lägger till en till slider/inputfält som ska ingå i beräkningen
+    För extrauppgift 3 krävs getElementsByClass
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Calculator Example</title>
+  </head>
+  <body>
+    <input type="text" id="num1" placeholder="Enter number 1" />
+    <input type="text" id="num2" placeholder="Enter number 2" />
+    <label for="temperatureSlider">Select Number:</label>
+    <input type="range" id="temperatureSlider" min="0" max="10" value="5" />
+    <span id="selectedTemperature">5</span>
+
+
+    <br /><br />
+    <button onclick="calculateSum()">+</button>
+    <button onclick="calculateDiff()">-</button>
+    <button onclick="calculateProduct()">*</button>
+    <button onclick="calculateQuote()">/</button>
+
+    <p id="result">Result:</p>
+  </body>
+  <script >
+
+    function calculateSum() {
+    let num1 = parseFloat(document.getElementById('num1').value);
+    let num2 = parseFloat(document.getElementById('num2').value);
+    let sum = num1 + num2;
+    document.getElementById('result').innerHTML = 'Result: ' + sum;
+}
+
+function calculateDiff() {
+   let num1 = parseFloat(document.getElementById('num1').value);
+    let num2 = parseFloat(document.getElementById('num2').value);
+    let sum = num1 - num2;
+    document.getElementById('result').innerHTML = 'Result: ' + sum;
+}
+
+function calculateProduct() {
+   let num1 = parseFloat(document.getElementById('num1').value);
+    let num2 = parseFloat(document.getElementById('num2').value);
+    let sum = num1 * num2;
+    document.getElementById('result').innerHTML = 'Result: ' + sum;
+}
+
+function calculateQuote() {
+   let num1 = parseFloat(document.getElementById('num1').value);
+    let num2 = parseFloat(document.getElementById('num2').value);
+    let sum = num1 / num2;
+    document.getElementById('result').innerHTML = 'Result: ' + sum;
+}
+
+
+
+  </script>
+
+
+</html>

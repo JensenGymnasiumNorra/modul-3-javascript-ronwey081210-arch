@@ -1,25 +1,97 @@
-<!--
-    Använd från genomgången (som ligger i filen nedan) för att skapa en miniräknare som fungerar för + - / *
-    Extrauppgift 1: Ändra inputfälten till sliders
-    Extrauppgift 2: Lägg till en dropdown för räknesätt och en knapp som utför beräkningen
-    Extrauppgift 3: Lägg till en knapp som lägger till en till slider/inputfält som ska ingå i beräkningen
-    För extrauppgift 3 krävs getElementsByClass
--->
+<!-- Använd från genomgången (som ligger i filen nedan) för att skapa en miniräknare som fungerar för + - / * 
+ Extrauppgift 1: Ändra inputfälten till sliders 
+ Extrauppgift 2: Lägg till en dropdown för räknesätt och en knapp som utför beräkningen 
+ Extrauppgift 3: Lägg till en knapp som lägger till en till slider/inputfält som ska ingå i beräkningen För extrauppgift 3 krävs getElementsByClass -->
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Calculator Example</title>
+    <title>Miniräknare</title>
   </head>
   <body>
-    <input type="text" id="num1" placeholder="Enter number 1" />
-    <input type="text" id="num2" placeholder="Enter number 2" />
-    <br /><br />
-    <button onclick="calculateSum()">+</button>
+    <div id="sliderContainer">
+      <input type="range" class="numInput" min="0" max="100" value="50" oninput="updateValues()" />
+      <span class="value">50</span><br />
+      <input type="range" class="numInput" min="0" max="100" value="50" oninput="updateValues()" />
+      <span class="value">50</span>
+    </div>
 
-    <p id="result">Result:</p>
+    <br />
+<!--För extrauppgifterna använde jag hjälp från chatgpt för att jag inte hade någon aning hur man skulle göra-->
+    <select id="operation">
+      <option value="sum">+</option>
+      <option value="diff">-</option>
+      <option value="product">*</option>
+      <option value="quote">/</option>
+    </select>
+
+    <button onclick="calculate()">Beräkna</button>
+    <button onclick="addSlider()">Lägg till en till slider</button>
+
+    <p id="result">Resultat:</p>
+
+    <script>
+      function updateValues() {
+        let sliders = document.getElementsByClassName("numInput");
+        let values = document.getElementsByClassName("value");
+        for (let i = 0; i < sliders.length; i++) {
+          values[i].innerText = sliders[i].value;
+        }
+      }
+      function calculateSum() {
+        let sliders = document.getElementsByClassName("numInput");
+        let total = 0;
+        for (let i = 0; i < sliders.length; i++) {
+          total += parseFloat(sliders[i].value);
+        }
+        document.getElementById("result").innerHTML = "Resultat: " + total;
+      }
+
+      function calculateDiff() {
+        let sliders = document.getElementsByClassName("numInput");
+        let total = parseFloat(sliders[0].value);
+        for (let i = 1; i < sliders.length; i++) {
+          total -= parseFloat(sliders[i].value);
+        }
+        document.getElementById("result").innerHTML = "Resultat: " + total;
+      }
+
+      function calculateProduct() {
+        let sliders = document.getElementsByClassName("numInput");
+        let total = 1;
+        for (let i = 0; i < sliders.length; i++) {
+          total *= parseFloat(sliders[i].value);
+        }
+        document.getElementById("result").innerHTML = "Resultat: " + total;
+      }
+
+      function calculateQuote() {
+        let sliders = document.getElementsByClassName("numInput");
+        let total = parseFloat(sliders[0].value);
+        for (let i = 1; i < sliders.length; i++) {
+          total /= parseFloat(sliders[i].value);
+        }
+        document.getElementById("result").innerHTML = "Resultat: " + total;
+      }
+
+      function calculate() {
+        let operation = document.getElementById("operation").value;
+        if (operation === "sum") calculateSum();
+        else if (operation === "diff") calculateDiff();
+        else if (operation === "product") calculateProduct();
+        else if (operation === "quote") calculateQuote();
+      }
+
+      function addSlider() {
+        let container = document.getElementById("sliderContainer");
+        let div = document.createElement("div");
+        div.innerHTML =
+          '<input type="range" class="numInput" min="0" max="100" value="50" oninput="updateValues()" /> <span class="value">50</span>';
+        container.appendChild(div);
+      }
+
+    </script>
   </body>
-  <script src="simple_calculator.js"></script>
 </html>
